@@ -1,0 +1,27 @@
+{
+  "name": "ull-esit-inf-dsi-20-21-prct10-async-sockets-joelull",
+  "version": "1.0.0",
+  "description": "ull-esit-inf-dsi-20-21-prct10-async-sockets-JoelULL created by GitHub Classroom",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct10-async-sockets-JoelULL.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct10-async-sockets-JoelULL/issues"
+  },
+  "homepage": "https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct10-async-sockets-JoelULL#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
+    "eslint": "^7.25.0",
+    "eslint-config-google": "^0.14.0",
+    "tsc-watch": "^4.2.9"
+  }
+}
