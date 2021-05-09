@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "doc": "typedoc",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls && rm -rf .nyc_outputnpm",
+    "coverage": "nyc npm test && nyc report --reporter=lcov",
     "test": "nyc mocha"
   },
   "repository": {
