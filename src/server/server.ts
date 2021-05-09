@@ -25,10 +25,8 @@ let server = net.createServer((connection) => {
       success: true,
     };
     /**
-     * En funcion de el tipo de comando que el usuario haya ingresado
-     * el tipo de resupesta llamará a los metodos correspondientes para
-     * comprobar si ha habido exito en las llamadas a estos métodos. En caso de que haya
-     * exito se realizaran los cambios pertinentes del comando introducido.
+     * En funcion de el tipo de comando que el usuario haya ingresado (request.type)
+     * se llamará a los metodos correspondientes para realizar los cambios pertinentes del comando introducido.
      * En caso de que no se conozca el tipo de petición que se ha generado, es
      * decir el comando que ha ingresado el usuario, se mostrará un mensaje de error.
      */
