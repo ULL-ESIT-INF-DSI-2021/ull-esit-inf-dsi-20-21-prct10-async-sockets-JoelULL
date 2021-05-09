@@ -70,6 +70,9 @@ let server = net.createServer((connection) => {
         console.log(chalk.red("Error, unknown command!"));
         break;
     }
+    /**
+    * Se envía el json
+    */
     connection.write(JSON.stringify(response), (err) => {
       if (err) 
         console.log(chalk.bold.red(`Error, Cannot make the request: ${err.message}`));
