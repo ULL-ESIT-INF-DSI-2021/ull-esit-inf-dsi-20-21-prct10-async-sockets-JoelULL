@@ -49,7 +49,7 @@ var server = net.createServer(function (connection) {
                     response.notes = [note];
                 break;
             default:
-                console.log(chalk.red('Invalid type'));
+                console.log(chalk.red("Error, unknown command!"));
                 break;
         }
         connection.write(JSON.stringify(response), function (err) {
@@ -63,5 +63,5 @@ var server = net.createServer(function (connection) {
     });
 });
 server.listen(60300, function () {
-    console.log(chalk.bold.green('Server is working fine, waiting request...'));
+    console.log(chalk.bold.green("Server is working fine, waiting request..."));
 });

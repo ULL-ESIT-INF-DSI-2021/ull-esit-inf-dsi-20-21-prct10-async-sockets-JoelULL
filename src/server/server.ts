@@ -56,7 +56,7 @@ let server = net.createServer((connection) => {
         break;
 
       default:
-        console.log(chalk.red('Invalid type'));
+        console.log(chalk.red("Error, unknown command!"));
         break;
     }
     connection.write(JSON.stringify(response), (err) => {
@@ -70,5 +70,5 @@ let server = net.createServer((connection) => {
   });
 });
 server.listen(60300, () => {
-  console.log(chalk.bold.green('Server is working fine, waiting request...'));
+  console.log(chalk.bold.green("Server is working fine, waiting request..."));
 });

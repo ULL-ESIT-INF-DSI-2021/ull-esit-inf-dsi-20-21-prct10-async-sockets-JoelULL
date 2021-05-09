@@ -1,14 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var chalk = require("chalk");
 var yargs = require("yargs");
 var net = require("net");
-var chalk = require("chalk");
 var eventEmitterClient_1 = require("./eventEmitterClient");
-/**
- * Para ejecutar abra dos terminales, primeramente en una deberá introducir `node dist/server.js`, para activar el servidor,
- * y en el otro `node dist/client.js add --user="daniel" --title="Red note" --body="This is a red note" --color="red"`, que mandará un mensaje desde el cliente al servidor.
- * Existen otros comandos: modify, remove, list y read.
- */
 var client = net.connect({ port: 60300 });
 var eventemitter = new eventEmitterClient_1.MessageEventEmitterClient(client);
 var requestNote = {
@@ -20,25 +15,24 @@ yargs.command({
     describe: 'Add a new note',
     builder: {
         user: {
-            describe: 'Username',
+            describe: 'Note user',
             demandOption: true,
             type: 'string',
         },
         title: {
-            describe: 'Notes\' title',
+            describe: 'Note title',
             demandOption: true,
             type: 'string',
         },
         body: {
-            describe: 'Body\'s title',
+            describe: 'Note body',
             demandOption: true,
             type: 'string',
         },
         color: {
-            describe: 'Color\'s note. Blue on unknown color.\nOnly red, green, blue and yellow available',
+            describe: 'Note color',
             demandOption: true,
             type: 'string',
-            default: 'blue',
         },
     },
     handler: function (argv) {
@@ -59,22 +53,22 @@ yargs.command({
     describe: 'Modify an exist note',
     builder: {
         user: {
-            describe: 'Username',
+            describe: 'Note user',
             demandOption: true,
             type: 'string',
         },
         title: {
-            describe: 'Notes\' title',
+            describe: 'Note title',
             demandOption: true,
             type: 'string',
         },
         body: {
-            describe: 'Body\'s title',
+            describe: 'Note body',
             demandOption: true,
             type: 'string',
         },
         color: {
-            describe: 'Color\'s note. Blue on unknown color.',
+            describe: 'Note color',
             demandOption: true,
             type: 'string',
         },
@@ -94,15 +88,15 @@ yargs.command({
 });
 yargs.command({
     command: 'remove',
-    describe: 'Remove an existing note',
+    describe: 'Remove a note',
     builder: {
         user: {
-            describe: 'Username',
+            describe: 'Note user',
             demandOption: true,
             type: 'string',
         },
         title: {
-            describe: 'Notes\' title',
+            describe: 'Note title',
             demandOption: true,
             type: 'string',
         },
@@ -122,7 +116,7 @@ yargs.command({
     describe: 'List notes from a user',
     builder: {
         user: {
-            describe: 'Username',
+            describe: 'Note user',
             demandOption: true,
             type: 'string',
         },
@@ -141,12 +135,12 @@ yargs.command({
     describe: 'read an existing note',
     builder: {
         user: {
-            describe: 'Username',
+            describe: 'Note user',
             demandOption: true,
             type: 'string',
         },
         title: {
-            describe: 'Notes\' title',
+            describe: 'Note title',
             demandOption: true,
             type: 'string',
         },
@@ -164,7 +158,7 @@ yargs.command({
 yargs.parse();
 client.write(JSON.stringify(requestNote) + '\n', function (err) {
     if (err)
-        console.log(chalk.red('Data couldn\'t be sended'));
+        console.log(chalk.red("Error, cant read the note!"));
 });
 eventemitter.on('message', function (request) {
     switch (request.type) {
@@ -172,19 +166,19 @@ eventemitter.on('message', function (request) {
             if (request.success)
                 console.log(chalk.bold.green("New note added!"));
             else
-                console.log(chalk.bold.red('Note title taken!'));
+                console.log(chalk.bold.red("Error couldnt add the note!"));
             break;
         case 'modify':
             if (request.success)
-                console.log(chalk.bold.green("Note overwrited!"));
+                console.log(chalk.bold.green("note modified"));
             else
-                console.log(chalk.bold.red('Couldn\'t overwrite!'));
+                console.log(chalk.bold.red("Error note wasnt modified"));
             break;
         case 'remove':
             if (request.success)
-                console.log(chalk.bold.green("Note removed!"));
+                console.log(chalk.bold.green("note deleted"));
             else
-                console.log(chalk.bold.red('Path note not found. Make sure that the user and the file name are correct, do not indicate the file extension .json'));
+                console.log(chalk.bold.red("couldnt delete that note!"));
             break;
         case 'list':
             if (request.success) {
@@ -204,7 +198,7 @@ eventemitter.on('message', function (request) {
                 console.log(colorprint(request.notes[0].body));
             }
             else
-                console.log(chalk.bold.red('Note not found'));
+                console.log(chalk.bold.red("Error, couldnt find that note!"));
             break;
         default:
             console.log(chalk.bold.red('Unknown command!'));
