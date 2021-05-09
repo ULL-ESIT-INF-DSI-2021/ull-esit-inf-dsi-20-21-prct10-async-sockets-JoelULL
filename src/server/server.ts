@@ -71,7 +71,7 @@ let server = net.createServer((connection) => {
         break;
     }
     /**
-    * Se envía el json
+    * Se envía el .json
     */
     connection.write(JSON.stringify(response), (err) => {
       if (err) 
