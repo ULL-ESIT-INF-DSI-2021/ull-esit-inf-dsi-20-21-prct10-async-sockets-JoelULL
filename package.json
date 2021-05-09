@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "doc": "typedoc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls && rm -rf .nyc_outputnpm",
+    "test": "nyc mocha"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "@types/chai": "^4.2.17",
     "@types/mocha": "^8.2.2",
     "@types/node": "^15.0.2",
+    "@types/typescript": "^2.0.0",
     "@types/yargs": "^16.0.1",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.22.1",
@@ -30,9 +32,11 @@
     "eslint": "^7.25.0",
     "eslint-config-google": "^0.14.0",
     "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
     "ts-node": "^9.1.1",
     "tsc-watch": "^4.2.9",
     "typedoc": "^0.20.36",
+    "typescript": "^4.2.4",
     "yargs": "^16.2.0"
   }
 }

@@ -1,11 +1,11 @@
 import * as fs from 'fs';
 import {Note} from './note';
 
-function removeSpaces(str : string) : string {
+export function removeSpaces(str : string) : string {
     let result : string = str.replace(/\s/g,"");
     return result;
 }
-function validateColor(color : string) : boolean {
+export function validateColor(color : string) : boolean {
     let colorList : string[] = ["red","green","blue","yellow"];
     let founded : boolean = false
     for (let i = 0; i < colorList.length; i++) {
@@ -22,7 +22,7 @@ export class NoteList {
   addNote(userNote: Note): boolean {
     let note : Note = userNote;
     let tojson = JSON.stringify(note, null, 2);
-    let dir : string = "../../users/" + userNote.getName();
+    let dir : string = "../../users/" + userNote.getUser();
     let titletojson = removeSpaces(userNote.getTitle());
     let jsonote : string = dir + "/" + titletojson + ".json";
 
@@ -45,7 +45,7 @@ export class NoteList {
   modifyNote(userNote: Note): boolean {
     let note : Note = userNote;
     let tojson = JSON.stringify(note, null, 2);
-    let dir : string = "../../users/" + userNote.getName();
+    let dir : string = "../../users/" + userNote.getUser();
     let titletojson = removeSpaces(userNote.getTitle());
     let jsonote : string = dir + "/" + titletojson + ".json";
 
