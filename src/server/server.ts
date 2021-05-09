@@ -4,7 +4,9 @@ import * as chalk from 'chalk';
 import * as net from 'net';
 import {NoteList} from '../note-list';
 import {MessageEventEmitterServer} from './eventEmitterServer';
-
+/**
+ * Se crear el servidor y se genera un objeto server.
+ */
 let server = net.createServer((connection) => {
   let emitter = new MessageEventEmitterServer(connection); 
 
@@ -13,12 +15,23 @@ let server = net.createServer((connection) => {
   emitter.on('request', (message) => {
     let request = message;
     let userlist = new NoteList(); 
-
+    /**
+     * Se rellena por defecto la respuesta
+     * del servidor. Utilizará ResponseType
+     * definida en el archivo types.ts
+     */
     let response: ResponseType = {
       type: 'add',
       success: true,
     };
-    
+    /**
+     * En funcion de el tipo de comando que el usuario haya ingresado
+     * el tipo de resupesta llamará a los metodos correspondientes para
+     * comprobar si ha habido exito en las llamadas a estos métodos. En caso de que haya
+     * exito se realizaran los cambios pertinentes del comando introducido.
+     * En caso de que no se conozca el tipo de petición que se ha generado, es
+     * decir el comando que ha ingresado el usuario, se mostrará un mensaje de error.
+     */
     let usernote = new Note(request.user, request.title, request.body, request.color);
     switch (request.type) {
       case 'add':
@@ -69,6 +82,10 @@ let server = net.createServer((connection) => {
     });
   });
 });
+/**
+ * El servidor escucha en el puerto 60300 siguiendo el ejemplo de los apuntes
+ * de la asignatura.
+ */
 server.listen(60300, () => {
   console.log(chalk.bold.green("Server is working fine, waiting request..."));
 });

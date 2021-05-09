@@ -4,12 +4,26 @@ var chalk = require("chalk");
 var yargs = require("yargs");
 var net = require("net");
 var eventEmitterClient_1 = require("./eventEmitterClient");
+/**
+ * La conexión se realizará con el puerto 60300
+ * siguiendo el ejemplo de los apuntes de la
+ * asignatura
+ */
 var client = net.connect({ port: 60300 });
 var eventemitter = new eventEmitterClient_1.MessageEventEmitterClient(client);
+/**
+ * Se rellena por defecto la petición
+ * del usuario. Utilizará RequestType
+ * definida en el archivo types.ts
+ */
 var requestNote = {
     type: 'add',
     user: '',
 };
+/**
+ * Comando que permite al usuario realizar una peticion al servidor
+ * para añadir una nota a su directorio.
+ */
 yargs.command({
     command: 'add',
     describe: 'Add a new note',
@@ -48,6 +62,10 @@ yargs.command({
         }
     },
 });
+/**
+ * Comando que permite al usuario realizar una peticion al servidor
+ * para modificar una nota en su directorio.
+ */
 yargs.command({
     command: 'modify',
     describe: 'Modify an exist note',
@@ -86,6 +104,10 @@ yargs.command({
         }
     },
 });
+/**
+ * Comando que permite al usuario realizar una peticion al servidor
+ * para eliminar una nota de su directorio.
+ */
 yargs.command({
     command: 'remove',
     describe: 'Remove a note',
@@ -111,6 +133,10 @@ yargs.command({
         }
     },
 });
+/**
+ * Comando que permite al usuario realizar una peticion al servidor
+ * para listar las notas de su directorio.
+ */
 yargs.command({
     command: 'list',
     describe: 'List notes from a user',
@@ -130,6 +156,10 @@ yargs.command({
         }
     },
 });
+/**
+ * Comando que permite al usuario realizar una peticion al servidor
+ * para leer una nota de su directorio.
+ */
 yargs.command({
     command: 'read',
     describe: 'read an existing note',
@@ -156,10 +186,18 @@ yargs.command({
     },
 });
 yargs.parse();
+/**
+ * Se envia la peticion del cliente al servidor
+ */
 client.write(JSON.stringify(requestNote) + '\n', function (err) {
     if (err)
-        console.log(chalk.red("Error, cant read the note!"));
+        console.log(chalk.red("Error, cant send your request!"));
 });
+/**
+ * En este manejador se especificara al usuario lo que ha ocurrido una vez el
+ * servidor ha dado respuesta a su petición. En caso de que haya sido realizada
+ * con exito o no, se mostrará un mensaje informativo al usuario.
+ */
 eventemitter.on('message', function (request) {
     switch (request.type) {
         case 'add':
@@ -205,6 +243,10 @@ eventemitter.on('message', function (request) {
             break;
     }
 });
+/**
+ * En caso de que no se pueda establecer una conexión con el
+ * servidor, se mostrará un mensaje de error
+ */
 client.on('error', function (err) {
     console.log(chalk.bold.red("Connection error"));
 });

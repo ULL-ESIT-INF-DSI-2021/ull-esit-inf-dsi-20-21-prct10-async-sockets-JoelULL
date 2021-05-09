@@ -17,6 +17,10 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessageEventEmitterClient = void 0;
 var events_1 = require("events");
+/**
+ * Clase que permitirá al cliente comunicarse con el servidor a
+ * traves de eventos de la clase EventEmitter.
+ */
 var MessageEventEmitterClient = /** @class */ (function (_super) {
     __extends(MessageEventEmitterClient, _super);
     function MessageEventEmitterClient(connection) {

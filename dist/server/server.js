@@ -5,16 +5,32 @@ var chalk = require("chalk");
 var net = require("net");
 var note_list_1 = require("../note-list");
 var eventEmitterServer_1 = require("./eventEmitterServer");
+/**
+ * Se crear el servidor y se genera un objeto server.
+ */
 var server = net.createServer(function (connection) {
     var emitter = new eventEmitterServer_1.MessageEventEmitterServer(connection);
     console.log(chalk.bold.green('User join the server'));
     emitter.on('request', function (message) {
         var request = message;
         var userlist = new note_list_1.NoteList();
+        /**
+         * Se rellena por defecto la respuesta
+         * del servidor. Utilizará ResponseType
+         * definida en el archivo types.ts
+         */
         var response = {
             type: 'add',
             success: true,
         };
+        /**
+         * En funcion de el tipo de comando que el usuario haya ingresado
+         * el tipo de resupesta llamará a los metodos correspondientes para
+         * comprobar si ha habido exito en las llamadas a estos métodos. En caso de que haya
+         * exito se realizaran los cambios pertinentes del comando introducido.
+         * En caso de que no se conozca el tipo de petición que se ha generado, es
+         * decir el comando que ha ingresado el usuario, se mostrará un mensaje de error.
+         */
         var usernote = new note_1.Note(request.user, request.title, request.body, request.color);
         switch (request.type) {
             case 'add':
@@ -62,6 +78,10 @@ var server = net.createServer(function (connection) {
         });
     });
 });
+/**
+ * El servidor escucha en el puerto 60300 siguiendo el ejemplo de los apuntes
+ * de la asignatura.
+ */
 server.listen(60300, function () {
     console.log(chalk.bold.green("Server is working fine, waiting request..."));
 });
