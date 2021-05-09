@@ -174,30 +174,31 @@ yargs.command({
 yargs.parse();
 
 client.write(JSON.stringify(requestNote) + '\n', (err) => {
-  if (err) console.log(chalk.red('Data couldn\'t be sended'));
+  if (err) 
+    console.log(chalk.red("Error, cant read the note!"));
 });
 
 eventemitter.on('message', (request) => {
   switch (request.type) {
     case 'add':
       if (request.success) 
-        console.log(chalk.bold.green(`New note added!`));
+        console.log(chalk.bold.green("New note added!"));
       else 
-        console.log(chalk.bold.red('Note title taken!'));
+        console.log(chalk.bold.red("Error couldnt add the note!"));
       break;
 
     case 'modify':
       if (request.success) 
-        console.log(chalk.bold.green(`Note overwrited!`));
+        console.log(chalk.bold.green("note modified"));
       else 
-        console.log(chalk.bold.red('Couldn\'t overwrite!'));
+        console.log(chalk.bold.red("Error note wasnt modified"));
       break;
 
     case 'remove':
       if (request.success) 
-        console.log(chalk.bold.green(`Note removed!`));
+        console.log(chalk.bold.green("note deleted"));
       else 
-        console.log(chalk.bold.red('Path note not found. Make sure that the user and the file name are correct, do not indicate the file extension .json'));
+        console.log(chalk.bold.red("couldnt delete that note!"));
       break;
 
     case 'list':
@@ -217,7 +218,7 @@ eventemitter.on('message', (request) => {
         console.log(colorprint(request.notes[0].title) );
         console.log(colorprint(request.notes[0].body) ); 
       } else 
-        console.log(chalk.bold.red('Note not found'));
+        console.log(chalk.bold.red("Error, couldnt find that note!"));
       break;
     default:
       console.log(chalk.bold.red('Unknown command!'));
