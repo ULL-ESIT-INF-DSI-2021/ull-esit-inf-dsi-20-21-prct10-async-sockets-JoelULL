@@ -24,10 +24,8 @@ var server = net.createServer(function (connection) {
             success: true,
         };
         /**
-         * En funcion de el tipo de comando que el usuario haya ingresado
-         * el tipo de resupesta llamará a los metodos correspondientes para
-         * comprobar si ha habido exito en las llamadas a estos métodos. En caso de que haya
-         * exito se realizaran los cambios pertinentes del comando introducido.
+         * En funcion de el tipo de comando que el usuario haya ingresado (request.type)
+         * se llamará a los metodos correspondientes para realizar los cambios pertinentes del comando introducido.
          * En caso de que no se conozca el tipo de petición que se ha generado, es
          * decir el comando que ha ingresado el usuario, se mostrará un mensaje de error.
          */
@@ -68,6 +66,9 @@ var server = net.createServer(function (connection) {
                 console.log(chalk.red("Error, unknown command!"));
                 break;
         }
+        /**
+        * Se envía el .json
+        */
         connection.write(JSON.stringify(response), function (err) {
             if (err)
                 console.log(chalk.bold.red("Error, Cannot make the request: " + err.message));
